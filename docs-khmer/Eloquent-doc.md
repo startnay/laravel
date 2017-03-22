@@ -70,94 +70,110 @@ Model អនុញ្ញាតិឱ្យយើង query  data ពី និង
           ដោយ default Eloquent ដឹងថា create_at និង update_at column មាននៅ ក្នុង table ទាំងអស់់ក្នុង databse។
  ប្រសិនបើអ្នកមិនចង់ ឱ្យ ទាំងពីខាងលើ ត្រូវបានគ្រប់គ្រងដោយ Eloquent អ្នក ត្រូវ set $timestamps property នៅលើ model to false ។
 
-By default, Eloquent expects created_at and updated_at columns to exist on your tables. If you do not wish to have these columns automatically managed by Eloquent, set the $timestamps property on your model to false:
 
-<?php
+              <?php
 
-namespace App;
+              namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+              use Illuminate\Database\Eloquent\Model;
 
-class Flight extends Model
-{
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-}
-If you need to customize the format of your timestamps, set the $dateFormat property on your model. This property determines how date attributes are stored in the database, as well as their format when the model is serialized to an array or JSON:
+              class Flight extends Model
+              {
+                  /**
+                   * Indicates if the model should be timestamped.
+                   *
+                   * @var bool
+                   */
+                  public $timestamps = false;
+              }
+              
+          ប្រើសិនបើអ្នកត្រូវការ កែតម្រូវ format នៃ timestamps របស់អ្នក អ្នកត្រូវ set $dateFormat property នៅលើ Model របស់អ្នក ។
+property នេះកំណត់ របៀបដែល date attribute ដែលត្រូវរក្សាទុកក្នុង database  ដូចនឺង format នៅពេល Model is serialized to an array or JSON
 
-<?php
 
-namespace App;
+        <?php
 
-use Illuminate\Database\Eloquent\Model;
+        namespace App;
 
-class Flight extends Model
-{
-    /**
-     * The storage format of the model's date columns.
-     *
-     * @var string
-     */
-    protected $dateFormat = 'U';
-}
-If you need to customize the names of the columns used to store the timestamps, you may set the  CREATED_AT and UPDATED_AT constants in your model:
+        use Illuminate\Database\Eloquent\Model;
 
-<?php
+        class Flight extends Model
+        {
+            /**
+             * The storage format of the model's date columns.
+             *
+             * @var string
+             */
+            protected $dateFormat = 'U';
+        }
+        
+        
+        ប្រសិនបើអ្នកត្រូវការ កែតម្រូវ ឈ្មោះរបស់ colums ដែលផ្ទុក timestamps អ្នកត្រូវ set CREATE_AT និង UPDATE_AT constants នៅក្នុង Model :       
 
-class Flight extends Model
-{
-    const CREATED_AT = 'creation_date';
-    const UPDATED_AT = 'last_update';
-}
-Database Connection
 
-By default, all Eloquent models will use the default database connection configured for your application. If you would like to specify a different connection for the model, use the $connection property:
+              <?php
 
-<?php
+              class Flight extends Model
+              {
+                  const CREATED_AT = 'creation_date';
+                  const UPDATED_AT = 'last_update';
+              }
+                                                   
+                                                   
+                                                   Database Connection
+        ដោយ default Eloquent model ទាំងអស់ប្រើ configure default connection  សំរាប់ application របស់អ្នក ៕ 
+ប្រសិនបើអ្នកចង់ connection ជាក់លាក់ផ្សេងមួយទៀត សំរាប់ Model អ្នកត្រូវប្រើ connection property ដូចខាងក្រោម :
 
-namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+            <?php
 
-class Flight extends Model
-{
-    /**
-     * The connection name for the model.
-     *
-     * @var string
-     */
-    protected $connection = 'connection-name';
-}
+            namespace App;
 
-Retrieving Models
+            use Illuminate\Database\Eloquent\Model;
 
-Once you have created a model and its associated database table, you are ready to start retrieving data from your database. Think of each Eloquent model as a powerful query builder allowing you to fluently query the database table associated with the model. For example:
+            class Flight extends Model
+            {
+                /**
+                 * The connection name for the model.
+                 *
+                 * @var string
+                 */
+                protected $connection = 'connection-name';
+            }
 
-<?php
+                                                      Retrieving Models
+          ដំបូងអ្នកត្រូវបង្កើត Model មួយ និង associated database table របស់វា ដើម្បីឱ្យអ្នកអាច ចាបផ្តើមទាញយក data ពី database របស់អ្នកបាន។
+ បើយើងគិតទៅ Eloquent model នីមួយៗ ជា powerful query builder ដែលអនុញ្ញាតិឱ្យអ្នក ឆាប់ស្ទាត់ នឹង query database table ដែល associate ជាមួយ
+ model ។ សូមមើល ឩទាហរណ៍ ដូចខាងក្រោម៖
 
-use App\Flight;
 
-$flights = App\Flight::all();
 
-foreach ($flights as $flight) {
-    echo $flight->name;
-}
-Adding Additional Constraints
+          <?php
 
-The Eloquent all method will return all of the results in the model's table. Since each Eloquent model serves as a query builder, you may also add constraints to queries, and then use the get method to retrieve the results:
+          use App\Flight;
 
-$flights = App\Flight::where('active', 1)
-               ->orderBy('name', 'desc')
-               ->take(10)
-               ->get();
-Since Eloquent models are query builders, you should review all of the methods available on the query builder. You may use any of these methods in your Eloquent queries.
+          $flights = App\Flight::all();
 
-Collections
+          foreach ($flights as $flight) {
+              echo $flight->name;
+          }
+          
+          
+                                              Adding Additional Constraints
 
+          All() method របស់ Eloquent return លទ្ធផល ទាំងអស់នៅក្នុង table របស់ Model ។ តាំងពី Eloquent Model serves as query builder 
+អ្នកអាចបន្ថែម constaints ទៅកាន់ queries ហើយបន្ទាប់មក ប្រើ method get() ដើម្បីទាញយកលទ្ធិផល។
+
+            $flights = App\Flight::where('active', 1)
+                           ->orderBy('name', 'desc')
+                           ->take(10)
+                           ->get();
+                           
+         តាំងពី Eloquent models គឺ query builders  អ្នកអាច review Method ទាំងអស់ ដែលអាចរកបាន នៅលើ query builder ។
+អ្នកអាចប្រើ method ទាំងអស់នេះ នៅក្នុង Eloquent queries របស់អ្នក ។
+
+                                                  Collections
+Eloquent method ដូចជា all() និង get() ដែលអាចទាញយក Multiple results ដែលជា instance មួយ
 For Eloquent methods like all and get which retrieve multiple results, an instance of  Illuminate\Database\Eloquent\Collection will be returned. The Collection class provides a variety of helpful methods for working with your Eloquent results:
 
 $flights = $flights->reject(function ($flight) {
