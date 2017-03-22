@@ -173,30 +173,38 @@ property នេះកំណត់ របៀបដែល date attribute ដែល
 អ្នកអាចប្រើ method ទាំងអស់នេះ នៅក្នុង Eloquent queries របស់អ្នក ។
 
                                                   Collections
-Eloquent method ដូចជា all() និង get() ដែលអាចទាញយក Multiple results ដែលជា instance មួយ
-For Eloquent methods like all and get which retrieve multiple results, an instance of  Illuminate\Database\Eloquent\Collection will be returned. The Collection class provides a variety of helpful methods for working with your Eloquent results:
+          Eloquent method ដូចជា all() និង get() ដែលអាចទាញយក Multiple results ដែលជា instance 
+មួយ របស់ Illuminate\Database\Eloquent\Collection នឹងត្រូវបាន return ។ Collection class បានផ្តល់នូវ method ដែលមានសារះប្រយោជន៍
+ជាច្រើន សំរាប់ធ្វើការជាមួយ Eloquent results :
 
-$flights = $flights->reject(function ($flight) {
-    return $flight->cancelled;
-});
-Of course, you may also simply loop over the collection like an array:
+        $flights = $flights->reject(function ($flight) {
+            return $flight->cancelled;
+        });
+        
+        យើងអាចប្រើ loop ជាមួយ collection ដូច array ដូចខាងក្រោម ផងដែរ
 
-foreach ($flights as $flight) {
-    echo $flight->name;
-}
+          foreach ($flights as $flight) {
+              echo $flight->name;
+          }
 
-Chunking Results
+                                                    Chunking Results
+                                                    
+            ប្រសិនបើអ្នកត្រូវការ Process thousands នៃ Eloquent recoreds អ្នកត្រូវប្រើ chunk command។ chunck() method នឺង ទាញ "chunk" នៃ 
+Eloquent models  ដើម្បីឱ្យវាក្លាយជា given Closure សំរាប់ processing ។ ការប្រើប្រាស់ chunck() method នឹង ចំណាយ memory ច្រើន នៅពេល ធ្វើការជាមួយ
+large result sets: 
 
-If you need to process thousands of Eloquent records, use the chunk command. The chunk method will retrieve a "chunk" of Eloquent models, feeding them to a given Closure for processing. Using the chunk method will conserve memory when working with large result sets:
+        Flight::chunk(200, function ($flights) {
+            foreach ($flights as $flight) {
+                //
+            }
+        });
+        
+          argument ទីមួយ ដែលបាន pass ទៅកាន់ method chunk() ខាងលើ គឺជាចំនួន record ដែលអ្នកចង់ ទាញយក ក្នុងមួយ "chunk" ។
+ Closure ដែល pass ទៅកាន់ second argument នឹងត្រូវបាន call សំរាប់ chunk ដែល ទាញពី database ។ database query នឹង execute 
+ ដើម្បីទាញយក chunk នីមួយៗរបស់ records ដែល pass ទៅ Closure ។ 
 
-Flight::chunk(200, function ($flights) {
-    foreach ($flights as $flight) {
-        //
-    }
-});
-The first argument passed to the method is the number of records you wish to receive per "chunk". The Closure passed as the second argument will be called for each chunk that is retrieved from the database. A database query will be executed to retrieve each chunk of records passed to the Closure.
 
-Using Cursors
+                                                      Using Cursors
 
 The cursor method allows you to iterate through your database records using a cursor, which will only execute a single query. When processing large amounts of data, the cursor method may be used to greatly reduce your memory usage:
 
