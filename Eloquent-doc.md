@@ -50,3 +50,13 @@ Model អនុញ្ញាតិឱ្យយើង query  data ពី និង
                 protected $table = 'my_flights';
             }
       
+      
+                                                  Primary Keys
+         ជាទូទៅ Eloquent នឺង សន្មតថា table នីមួយៗមាន primary column ដែលមានឈ្មោះ id ។ ហើយយើងក៏អាច បង្កើត $primaryKey property 
+ដើម្បី override លើ primarry key default របស់ បានផងដែរ ៕
+        បន្ថែមលើពីនេះទៀត Eloquent នឹង សន្មតថា primary key គឺជាតម្លៃ incrementing integer ដែលមាន័យថា primary key គឺត្រូវបាន cast ទៅជា
+int ដោយស្វ័យប្រវត្ត ៕  ប្រសិនបើយើងចង់ប្រើ non-incrementing ឬ non-numberic primary key អ្នកត្រូវតែ set public $incrementing property 
+នៅលើ Model ស្មើ false ៕
+
+
+
