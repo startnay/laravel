@@ -1,1 +1,7 @@
+                                                  ការណែនាំឱ្យស្គាល់ Eloquent
+      Eloquent ORM គឺ featureមួយរបស់ Laravel ដែលប្រើសំរាប់ធ្វើការជាមួយ databse ៕
+រាល់ table ទាំងអស់នៅក្នុង database តែងតែមាន Model មួយដែលប្រើសំរាប់ធ្វើអន្តរ ជាមួយ table ក្នុង databse។
+Model អនុញ្ញាតិឱ្យយើង query  data ពី និង insert data ចូលទៅក្នុង table។
 
+      មុនពេលអ្នកចាប់ផ្តើម ចូរប្រាកដថា អ្នកបាន  configure database connection នៅក្នុង config/databse.php។
+      
