@@ -12,6 +12,11 @@ Model អនុញ្ញាតិឱ្យយើង query  data ពី និង
           
         នៅក្នុង laravel យើងអាចបង្កើត model instance នីមួយៗដោយប្រើ Artisan command ដូចខាងក្រោម
             php artisan make:model <model-name> 
+        
+       ម្យ៉ាងវិញទៀតប្រសិនបើយើងចង់ បង្កើត migration ដំណាលគ្នាជាមួយ Model ដូចខាងក្រោម 
+            php artisan make:model <model-name> -m 
+      Artisan command ខាងលើ នឹង បង្កើត file 2 គឺ 
+         file migration និង file model 
                     
                                                       ការបង្កើត Eloquent Model
  
