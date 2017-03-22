@@ -57,13 +57,18 @@ Model អនុញ្ញាតិឱ្យយើង query  data ពី និង
                 protected $table = 'my_flights';
             }
       
-Primary Keys
+                                                      Primary Keys
+          Eloquent នឺង សន្មតថា table នីមួយៗ មាន primary key column ឈ្មោះ id ។ យើងអាច កំណត់ $primaryKey property ដើម្បី override 
+ defualt primary key របស់ laravel។
+ 
+          បន្ថែមលើពីនេះទៀត primary key គឺជា incrementing integer value ដែល មានន័យថា primary key នឺង cast ទៅជា int ដោយស្វ័យប្រវត្ត ៕
+ប្រសិនបើយើងចង់ប្រើ non-incrementing ឬ non-numeric primary Key យើងត្រូវ set public $incrementing property នៅលើ Model ស្មើ false ៕
 
-Eloquent will also assume that each table has a primary key column named id. You may define a  $primaryKey property to override this convention.
 
-In addition, Eloquent assumes that the primary key is an incrementing integer value, which means that by default the primary key will be cast to an int automatically. If you wish to use a non-incrementing or a non-numeric primary key you must set the public $incrementing property on your model to false.
 
-Timestamps
+                                                        Timestamps
+          ដោយ default Eloquent ដឹងថា create_at និង update_at column មាននៅ ក្នុង table ទាំងអស់់ក្នុង databse។
+ ប្រសិនបើអ្នកមិនចង់ ឱ្យ ទាំងពីខាងលើ ត្រូវបានគ្រប់គ្រងដោយ Eloquent អ្នក ត្រូវ set $timestamps property នៅលើ model to false ។
 
 By default, Eloquent expects created_at and updated_at columns to exist on your tables. If you do not wish to have these columns automatically managed by Eloquent, set the $timestamps property on your model to false:
 
