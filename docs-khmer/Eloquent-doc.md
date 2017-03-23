@@ -316,12 +316,14 @@ save method:
                 $flight->save();
                                                         
                                                         Mass Updates
+        ម្យ៉ាងវិញ យើងក៏អាច update រាល់ record ទាំងអស់ ដែល ត្រូវនឹង query របស់ model ។ នៅក្នុង ឩទាហរណ៍ខាងក្រោម រាល់ records ដែលនៅក្នុង 
+table flights ដែល មាន column active ស្មើ ១ និង column destination ស្មើ San Diego  នោះវាត្រូវបាន mark delayed=1 ។ 
 
-Updates can also be performed against any number of models that match a given query. In this example, all flights that are active and have a destination of San Diego will be marked as delayed:
 
-App\Flight::where('active', 1)
-          ->where('destination', 'San Diego')
-          ->update(['delayed' => 1]);
+          App\Flight::where('active', 1)
+                ->where('destination', 'San Diego')
+                ->update(['delayed' => 1]);
+
 The update method expects an array of column and value pairs representing the columns that should be updated.
 
 When issuing a mass update via Eloquent, the saved and updated model events will not be fired for the updated models. This is because the models are never actually retrieved when issuing a mass update.
