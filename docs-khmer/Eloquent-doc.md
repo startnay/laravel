@@ -358,43 +358,58 @@ When issuing a mass update via Eloquent, the saved and updated model events will
              */
             protected $fillable = ['name'];
         }
-Once we have made the attributes mass assignable, we can use the create method to insert a new record in the database. The create method returns the saved model instance:
+        
+        ដំបូង យើងបង្កើត attribute mass assignable ដែលយើងអាចប្រើ create method ដើម្បី insert record ថ្មីមួយចូលក្នុង database ។
+create method return saved model instance :
 
-$flight = App\Flight::create(['name' => 'Flight 10']);
-If you already have a model instance, you may use the fill method to populate it with an array of attributes:
 
-$flight->fill(['name' => 'Flight 22']);
-Guarding Attributes
+         $flight = App\Flight::create(['name' => 'Flight 10']);
 
-While $fillable serves as a "white list" of attributes that should be mass assignable, you may also choose to use $guarded. The $guarded property should contain an array of attributes that you do not want to be mass assignable. All other attributes not in the array will be mass assignable. So,  $guarded functions like a "black list". Of course, you should use either $fillable or $guarded - not both. In the example below, all attributes except for price will be mass assignable:
+      ប្រសិនបើយើងមាន model instance មួយហើយនោះ យើងអាចប្រើ fill method ដើម្បី populate វាជាមួយ array នៃ attributes :
+
+
+            $flight->fill(['name' => 'Flight 22']);
+
+                                                          Guarding Attributes
+        នៅពេលដែល $fillable serves ជា "white list" នៃ attribute ដែល គួតែ mass assignable អ្នកអាចជ្រើសរើសប្រើ $guarded ។
+$guarded property គួតែ ផ្ទុក array មួយនៃ attributes ដែលអ្នកមិនចង់ឱ្យ mass assignable ។ រាល់ attributes ផ្សេងទៀត ដែលមិននៅក្នុង
+array ជា mass assignable ។ ដូចនេះហើយ $guarded function ដូចនឹង "black list" ។ អ្នកអាចប្រើ $fillable ឬ $guarded ប៉ុន្តែរមិនមែនប្រើ
+ទាំងពីរឡើយ ។ នៅក្នុង ឩទាហរណ៍ខាងក្រោមនេះ  attribute ទាំងអស់ លើកលែងតែ price ជា mass assignable ។
+
 
 <?php
 
-namespace App;
+      namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+      use Illuminate\Database\Eloquent\Model;
 
-class Flight extends Model
-{
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = ['price'];
-}
-If you would like to make all attributes mass assignable, you may define the $guarded property as an empty array:
+      class Flight extends Model
+      {
+          /**
+           * The attributes that aren't mass assignable.
+           *
+           * @var array
+           */
+          protected $guarded = ['price'];
+      }
+      
+      
+      ប្រសិនបើអ្នកចង់អោយ attributes ទាំងអស់ ជា mass assignable អ្នកអាច define $guarded property ជា empty array:
 
-/**
- * The attributes that aren't mass assignable.
- *
- * @var array
- */
-protected $guarded = [];
+              /**
+               * The attributes that aren't mass assignable.
+               *
+               * @var array
+               */
+              protected $guarded = [];
 
-Other Creation Methods
+                                    
+                                    
+                                      Other Creation Methods
 
-firstOrCreate/ firstOrNew
+                                      firstOrCreate/ firstOrNew
+       មាន methods ពីផ្សេងទៀតដែលអ្នកអាចប្រើដើម្បីបង្កើត model ដោយ mass assigning attributes : firstOrCreate and firstOrNew ៕
+firstOrCreate method  
 
 There are two other methods you may use to create models by mass assigning attributes:  firstOrCreate and firstOrNew. The firstOrCreate method will attempt to locate a database record using the given column / value pairs. If the model can not be found in the database, a record will be inserted with the given attributes.
 
