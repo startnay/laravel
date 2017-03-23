@@ -324,33 +324,40 @@ table flights ដែល មាន column active ស្មើ ១ និង colum
                 ->where('destination', 'San Diego')
                 ->update(['delayed' => 1]);
 
-The update method expects an array of column and value pairs representing the columns that should be updated.
+        ក្នុងករណីដូចខាងលើ array នៃ column និង តម្លៃ គួរ របស់ដែលតំណាងឱ្យ column នីមួយនោះ គួតែត្រូវបាន date ។ 
 
 When issuing a mass update via Eloquent, the saved and updated model events will not be fired for the updated models. This is because the models are never actually retrieved when issuing a mass update.
 
-Mass Assignment
+                                                          Mass Assignment
+      យើងអាចប្រើ create method ដើម្បី save records នៅក្នុង table នៅក្នុង ដោយប្រើ single line ។ inserted model instance  នឹង 
+នឹង return ពី method ។ មុនពេលដែលអាចធ្វើបានដូចខាងលើ អ្នកត្រូវ កំណត់ fillable ឬ guarded attribute ឱ្យបាន ជាក់លាក់ នៅលើ Model
+ព្រោះគ្រប់ Eloquent models  ទាំងអស់ ការពារ mass-assignment ដោយ default
 
-You may also use the create method to save a new model in a single line. The inserted model instance will be returned to you from the method. However, before doing so, you will need to specify either a fillable or guarded attribute on the model, as all Eloquent models protect against mass-assignment by default.
+        mass-assignment vulnerability កើតឡើង នៅពេល user pass unexpecteced http parameter មួយតាមរយះ request ហើយ change column
+ នៅក្នុង database ដែលយើងមិនដឹង។ សំរាប់ជាឩទាហរណ៍ malicious user អាច send is_admin parameter តាមរយះ http request  ដែល pass
+ ចូលទៅកាន់ create method របស់ model ដែលអនុញ្ញាតឱ្យ user ធ្វើឱ្យខ្ឡូនគេ ក្លាយជា administrator ។ 
 
-A mass-assignment vulnerability occurs when a user passes an unexpected HTTP parameter through a request, and that parameter changes a column in your database you did not expect. For example, a malicious user might send an is_admin parameter through an HTTP request, which is then passed into your model's create method, allowing the user to escalate themselves to an administrator.
+        ដូចនេះហើយ អ្នកគួតែ define តែ attributes ណា ដែលអ្នកចង់ឱ្យបង្កើត mass assignable បានហើយ ។ អ្នកអាចប្រើដូចនេះដោយប្រើ $fillable 
+ property នៅលើ model ។ សំរាប់ជា ឩទាហរណ៍  នៅក្នុង Flight Model របស់យើង  បើយើងចង់ឱ្យតែ name attribute នៃ Flight model
+ mass assignable :
+ 
 
-So, to get started, you should define which model attributes you want to make mass assignable. You may do this using the $fillable property on the model. For example, let's make the name attribute of our Flight model mass assignable:
 
-<?php
+        <?php
 
-namespace App;
+        namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+        use Illuminate\Database\Eloquent\Model;
 
-class Flight extends Model
-{
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name'];
-}
+        class Flight extends Model
+        {
+            /**
+             * The attributes that are mass assignable.
+             *
+             * @var array
+             */
+            protected $fillable = ['name'];
+        }
 Once we have made the attributes mass assignable, we can use the create method to insert a new record in the database. The create method returns the saved model instance:
 
 $flight = App\Flight::create(['name' => 'Flight 10']);
