@@ -242,58 +242,63 @@ large result sets:
         មានពេលខ្លះអ្នកចង់ throw exceptionមួយ ប្រើសិនបើ model មិនមាន ។ នេះជាវិធីសាស្រ្តងាយស្រួលមួយ ដែលអាចធ្វើទៅបានក្នុង routes ឬ controllers។
 យើងប្រើ findOrFail and firstOrFail method ដើម្បីទាញយក first result នៃ query  ក្នុងករណីដែល result not found 
 Illuminate\Database\Eloquent\ModelNotFoundException នឹងត្រូវ throw :
+      
+      
+        $model = App\Flight::findOrFail(1);
+        $model = App\Flight::where('legs', '>', 100)->firstOrFail();
+        
+        ប្រើសិនបើ exception មិនបាន catch  នោះ ៤០៤ http response នឹង send ដោយស្វ័យប្រវត្តមក user ។ វាគ្មានការចាំបាច់ទេដែលយើងចាំបាច់
+ សរសេរ explicit check ដើម្បី return ៤០៤ response នៅពេលប្រើ method ទាំងនេះ។
+        សូមមើល ឩទាហរណ៍ខាងក្រោម
+           
+          Route::get('/api/flights/{id}', function ($id) {
+              return App\Flight::findOrFail($id);
+          });
 
-$model = App\Flight::findOrFail(1);
-
-$model = App\Flight::where('legs', '>', 100)->firstOrFail();
-If the exception is not caught, a 404 HTTP response is automatically sent back to the user. It is not necessary to write explicit checks to return 404 responses when using these methods:
-
-Route::get('/api/flights/{id}', function ($id) {
-    return App\Flight::findOrFail($id);
-});
-
-Retrieving Aggregates
-
-You may also use the count, sum, max, and other aggregate methods provided by the query builder. These methods return the appropriate scalar value instead of a full model instance:
-
-$count = App\Flight::where('active', 1)->count();
-
-$max = App\Flight::where('active', 1)->max('price');
-
-Inserting & Updating Models
+                                            Retrieving Aggregates
+          យើងអាចប្រើ count,sum,max និង arregate methods ផ្សេងៗទៀតជាច្រើនដែលផ្តល់ដោយ query builder ។ 
+Method ទាំងនេះ return scalar value ជំនួស full model instance ។ 
 
 
-Inserts
+          $count = App\Flight::where('active', 1)->count();
+          $max = App\Flight::where('active', 1)->max('price');
 
-To create a new record in the database, simply create a new model instance, set attributes on the model, then call the save method:
+                                          Inserting & Updating Models
 
-<?php
 
-namespace App\Http\Controllers;
+                                                Inserts
+        ជាមួយ Model ការបង្កើត record ថ្មីមួយ  គឺជាការបង្កើត model instance ថ្មីមួយ ហើយ set attributes នៅលើ Model បន្ទាប់មក call 
+save method:
+        សូមមើល ឩទាហរណ៍ខាងក្រោម ៖
+        
 
-use App\Flight;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+            <?php
 
-class FlightController extends Controller
-{
-    /**
-     * Create a new flight instance.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        // Validate the request...
+            namespace App\Http\Controllers;
 
-        $flight = new Flight;
+            use App\Flight;
+            use Illuminate\Http\Request;
+            use App\Http\Controllers\Controller;
 
-        $flight->name = $request->name;
+            class FlightController extends Controller
+            {
+                /**
+                 * Create a new flight instance.
+                 *
+                 * @param  Request  $request
+                 * @return Response
+                 */
+                public function store(Request $request)
+                {
+                    // Validate the request...
 
-        $flight->save();
-    }
-}
+                    $flight = new Flight;
+
+                    $flight->name = $request->name;
+
+                    $flight->save();
+                }
+            }
 In this example, we simply assign the name parameter from the incoming HTTP request to the name attribute of the App\Flight model instance. When we call the save method, a record will be inserted into the database. The created_at and updated_at timestamps will automatically be set when the save method is called, so there is no need to set them manually.
 
 
