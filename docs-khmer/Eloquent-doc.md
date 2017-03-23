@@ -408,6 +408,7 @@ array ជា mass assignable ។ ដូចនេះហើយ $guarded function �
                                       Other Creation Methods
 
                                       firstOrCreate/ firstOrNew
+                                      
        មាន methods ពីផ្សេងទៀតដែលអ្នកអាចប្រើដើម្បីបង្កើត model ដោយ mass assigning attributes : firstOrCreate and firstOrNew ៕
 firstOrCreate method  
 
