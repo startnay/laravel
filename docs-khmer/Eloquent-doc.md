@@ -205,22 +205,28 @@ large result sets:
 
 
                                                       Using Cursors
+        cursor method អនុញ្ញាតិឱ្យអ្នក iterate database records ដោយប្រើ cursor មួយ ដែលនឹង execute single query ។
+នៅពេល processing large amounts of data  cursor method អាចត្រូវបានប្រើ ដោយកាត់បន្ថយ ការប្រើប្រាស់ memory :
 
-The cursor method allows you to iterate through your database records using a cursor, which will only execute a single query. When processing large amounts of data, the cursor method may be used to greatly reduce your memory usage:
+      foreach (Flight::where('foo', 'bar')->cursor() as $flight) {
+          //
+      }
 
-foreach (Flight::where('foo', 'bar')->cursor() as $flight) {
-    //
-}
-
-Retrieving Single Models / Aggregates
-
-Of course, in addition to retrieving all of the records for a given table, you may also retrieve single records using find and first. Instead of returning a collection of models, these methods return a single model instance:
-
-// Retrieve a model by its primary key...
-$flight = App\Flight::find(1);
-
-// Retrieve the first model matching the query constraints...
-$flight = App\Flight::where('active', 1)->first();
+                                      Retrieving Single Models / Aggregates
+        បន្ថែមលើការ ទាញយក records ទាំងអស់ ពី table អ្នកអាចទាញយក  single records ដោយប្រើ find និង first ។ 
+ជំនួសឱ្យការទាញយក collection មួយរបស់ models ដែល method return single model instance:
+      
+    public class Flight{
+          public function get(){
+                // Retrieve a model by its primary key...
+                $flight = App\Flight::find(1);
+  
+                // Retrieve the first model matching the query constraints...
+                $flight = App\Flight::where('active', 1)->first();
+               }
+     }
+     
+      
 You may also call the find method with an array of primary keys, which will return a collection of the matching records:
 
 $flights = App\Flight::find([1, 2, 3]);
