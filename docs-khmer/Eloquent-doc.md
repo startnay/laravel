@@ -299,10 +299,13 @@ save method:
                     $flight->save();
                 }
             }
-In this example, we simply assign the name parameter from the incoming HTTP request to the name attribute of the App\Flight model instance. When we call the save method, a record will be inserted into the database. The created_at and updated_at timestamps will automatically be set when the save method is called, so there is no need to set them manually.
+          
+         នៅក្នុង ឩទាហរណ៍ ខាងលើ assign property name របស់  http request  អោយ name attribute  App\Flight model instance។
+ នៅពែលយើង call save method  record មួយនឹង ត្រូវ insert ចូលទៅក្នុង database ។ ចំណែកឯ create_at និង update_at timestamps នឹង
+ set ដោយស្វ័យប្រវត្ត នៅពេលដែល save method ត្រូវបាន call  ដោយយើងមិនចាំបាច់ set វាដោយ manuall ឡើយ ។
 
 
-Updates
+                                                            Updates
 
 The save method may also be used to update models that already exist in the database. To update a model, you should retrieve it, set any attributes you wish to update, and then call the save method. Again, the updated_at timestamp will automatically be updated, so there is no need to manually set its value:
 
