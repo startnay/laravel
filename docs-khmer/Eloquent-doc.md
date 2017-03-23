@@ -227,10 +227,15 @@ large result sets:
      }
      
       
-You may also call the find method with an array of primary keys, which will return a collection of the matching records:
-
-$flights = App\Flight::find([1, 2, 3]);
-Not Found Exceptions
+      យើងអាច call find method ជាមួយ array primary keys ដែល វានឹង return collection នៃគ្រប់ records ដែលមាន primary keys ស្មើ នឹង element របស់ array ដូចខាងក្រោម ៖ 
+        
+        ឩទាហរណ៍ : យើងចង់ស្វែងរក records នៅក្នុង table flights ដែលមាន primary keys ស្មើ ១ ឬ ២ ឬ ៣ អ្នកអាចសរសេរវាដូចខាងក្រោម ៖
+          public class Flight{
+              public function getCollectionOfRecords(){
+                    $flights = App\Flight::find([1, 2, 3]);
+                    //Not Found Exceptions
+                }
+         }
 
 Sometimes you may wish to throw an exception if a model is not found. This is particularly useful in routes or controllers. The findOrFail and firstOrFail methods will retrieve the first result of the query; however, if no result is found, a Illuminate\Database\Eloquent\ModelNotFoundException will be thrown:
 
