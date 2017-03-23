@@ -306,15 +306,16 @@ save method:
 
 
                                                             Updates
+        ម៉្យាងវិញទៀតយើងអាចប្រើ save method ដើម្បី update record ដែលមានរួចរាល់ហើយ នៅក្នុង database ដៅយយើង គ្រាន់ទាញយក record នោះ
+ពីdatabase មកផ្ទយកលើ model ហើយ assign តម្លៃថ្មី ទៅឱ្យ attributes របស់វា បន្ទាប់មក call save method នោះ record នោះនឹង update ។
+ហើយ timestamp  update_at នឹងត្រូវបាន ដោយស្វ័យប្រវត្ត  ដោយមិនចាំ assign តម្លៃឱ្យវា ដោយ manual ឡើយ ៕
 
-The save method may also be used to update models that already exist in the database. To update a model, you should retrieve it, set any attributes you wish to update, and then call the save method. Again, the updated_at timestamp will automatically be updated, so there is no need to manually set its value:
-
-$flight = App\Flight::find(1);
-
-$flight->name = 'New Flight Name';
-
-$flight->save();
-Mass Updates
+   
+                $flight = App\Flight::find(1);
+                $flight->name = 'New Flight Name';
+                $flight->save();
+                                                        
+                                                        Mass Updates
 
 Updates can also be performed against any number of models that match a given query. In this example, all flights that are active and have a destination of San Diego will be marked as delayed:
 
