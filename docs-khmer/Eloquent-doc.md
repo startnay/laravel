@@ -412,14 +412,13 @@ array ជា mass assignable ។ ដូចនេះហើយ $guarded function �
        មាន methods ពីផ្សេងទៀតដែលអ្នកអាចប្រើដើម្បីបង្កើត model ដោយ mass assigning attributes : firstOrCreate and firstOrNew ៕
 firstOrCreate method  attempt to locate a database record ដោយប្រើ column/ value pairs . ប្រសិនបើ model model មិនមាន នៅក្នុង database
 record ថ្មីមួយនឹងត្រូវបាន insert ចូលទៅក្នុង table ជាមួយ attibute ក្នុង database ។ 
-
-        firstOrNew method ដូចនឹង firstOrCreate ដោយវា attempt to locate record នៅក្នុង database ដែលត្រូវជាមួយ attributes ដែលផ្តល់ឱ្យ ។
+      firstOrNew method ដូចនឹង firstOrCreate ដោយវា attempt to locate record នៅក្នុង database ដែលត្រូវជាមួយ attributes ដែលផ្តល់ឱ្យ ។
 ដូចនេះហើយប្រសិនបើ models មិនមាន model instance ថ្មីនឹងត្រូវបានបង្កើត ឡើង ហើយ return ៕ ចូរចំណាំថា model ដែល return ដោយ firstOrNew 
 has not yet been persisted to database ទេ ៕ យើងត្រូវការ cave ដោយ manull ដើម្បី persist វា។ 
 
 
                           // Retrieve the flight by the attributes, or create it if it doesn't exist...
-          $flight = App\Flight::firstOrCreate(['name' => 'Flight 10']);
+                  $flight = App\Flight::firstOrCreate(['name' => 'Flight 10']);
 
-          // Retrieve the flight by the attributes, or instantiate a new instance...
-          $flight = App\Flight::firstOrNew(['name' => 'Flight 10']);
+                  // Retrieve the flight by the attributes, or instantiate a new instance...
+                  $flight = App\Flight::firstOrNew(['name' => 'Flight 10']);
