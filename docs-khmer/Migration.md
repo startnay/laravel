@@ -5,21 +5,21 @@ application ។ ប្រសិនបើអ្នកមិនចង់ ប្រ
 
        Laravel Schema facade បានផ្តល់ជួន database agnostic ដែល support ដល់ការបង្កើត និង ធ្វើការកែប្រែផ្សេងៗ លើ tables across all of Laravel's supported database systems។
 
-T
 
+                                                          Generating Migrations
+        ដើម្បីបង្កើត migration យើងប្រើ make:migration artisan command ដូចខាងក្រោម:
 
-Generating Migrations
+              php artisan make:migration create_users_table
+              
+       migration ថ្មីនឹង ត្រូវបាន ដាក់នៅក្នុ directory database/migrations ។ migration file នីមួយៗ ផ្ទុក timestamp ដែលអនុញ្ញាតឱ្យ laravel
+កំណត់ លំដាប់ migrations ។ 
+      --table និង --create options អាចត្រូវប្រើដើម្បី ដាក់ឈ្មោះ table ដែល Migration នឹងបង្កើត ក្នុង database  ។  
+     These options simply pre-fill the generated migration stub file with the specified table:
 
-To create a migration, use the make:migration Artisan command:
+            php artisan make:migration create_users_table --create=users
 
-php artisan make:migration create_users_table
-The new migration will be placed in your database/migrations directory. Each migration file name contains a timestamp which allows Laravel to determine the order of the migrations.
-
-The --table and --create options may also be used to indicate the name of the table and whether the migration will be creating a new table. These options simply pre-fill the generated migration stub file with the specified table:
-
-php artisan make:migration create_users_table --create=users
-
-php artisan make:migration add_votes_to_users_table --table=users
+            php artisan make:migration add_votes_to_users_table --table=users
+     
 If you would like to specify a custom output path for the generated migration, you may use the  --path option when executing the make:migration command. The given path should be relative to your application's base path.
 
 
