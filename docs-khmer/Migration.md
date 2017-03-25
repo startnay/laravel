@@ -1,8 +1,11 @@
-Introduction
+                                                                ការណែនាំឱ្យស្គាល់
+      Migrations ដូចនឹង version control របស់ databse  ដែលអនុញ្ញាត ឱ្យ ក្រុមរបស់ អ្នក ងាយស្រួលកែប្រែ និង ចែករំលែក database schmea  របស់
+application ។ ប្រសិនបើអ្នកមិនចង់ ប្រាប់ មិត្តរួមការងារបស់អ្នក បន្ថែម column មួយទៅកាន់ local database schema របស់ពួកគេ ៕ អ្នកអាចប្រឈមនឹង បញ្ហារ
+ដែល database migration solve ។
 
-Migrations are like version control for your database, allowing your team to easily modify and share the application's database schema. Migrations are typically paired with Laravel's schema builder to easily build your application's database schema. If you have ever had to tell a teammate to manually add a column to their local database schema, you've faced the problem that database migrations solve.
+       Laravel Schema facade បានផ្តល់ជួន database agnostic ដែល support ដល់ការបង្កើត និង ធ្វើការកែប្រែផ្សេងៗ លើ tables across all of Laravel's supported database systems។
 
-The Laravel Schema facade provides database agnostic support for creating and manipulating tables across all of Laravel's supported database systems.
+T
 
 
 Generating Migrations
