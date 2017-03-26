@@ -73,16 +73,21 @@ Schema builder  ដើម្បីឱ្យកាន់តែច្បាស់�
          ប្រើសិនអ្នក កំពុងប្រើ homestead virtual machin អ្នកគួតែ run command ខាងក្រោម នៅក្នុង virtual machine។
          
         Forcing Migrations To Run In Production
+        
+       migration operations មួយចំនួន គឺជា destructive ដែលមានន័យថា វាអាចបណ្តាល ឱ្យបាត់បង់ data ។ នៅក្នុងគោលបំណងដើម្បី ការអ្នកកុំឱ្យ
+run command ទាំងនេះទៅលើ production database អ្នកអាច prompt ដើម្បីបញ្ជាក់ ការប្រតិបត្តិ command ខាងលើ ។ ដើម្បី run commands ខាងលើនេះដោយមិន
+ចាំបាច់ prompt អ្នកត្រូវប្រើ  --force flag:
+        
+        php artisan migrate --force
 
-Some migration operations are destructive, which means they may cause you to lose data. In order to protect you from running these commands against your production database, you will be prompted for confirmation before the commands are executed. To force the commands to run without a prompt, use the --force flag:
+                                                Rolling Back Migrations
 
-php artisan migrate --force
+        ដើម្បី rollback latest migration operation អ្នកត្រូវប្រើ rollback command ។ command នេះ roll back "batch" ចំងក្រោយ នៃ migrations
+ដែលអាចបន្ថែម multiple migration files :
+                            
+        php artisan migrate:rollback
 
-Rolling Back Migrations
 
-To rollback the latest migration operation, you may use the rollback command. This command rolls back the last "batch" of migrations, which may include multiple migration files:
-
-php artisan migrate:rollback
 You may rollback a limited number of migrations by providing the step option to the rollback command. For example, the following command will rollback the last five migrations:
 
 php artisan migrate:rollback --step=5
