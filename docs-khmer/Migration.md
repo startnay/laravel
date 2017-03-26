@@ -294,26 +294,33 @@ Doctrine DBAL library ត្រូវបានប្រើដើម្បីក�
               Schema::table('users', function (Blueprint $table) {
                   $table->renameColumn('from', 'to');
               });
-Renaming any column in a table that also has a column of type enum is not currently supported.
+              
+           នាពេលបច្ចុប្បន្ន ការ rename column ណាមួយក្នុង table ដែលមាន column type ជា enum មិន support ។ 
 
-Dropping Columns
+                                            Dropping Columns
+          
+           ដើម្បី drop column សូមប្រើ dropColumn method នៅលើ Schema builder ។ មុនពេល លុប columns ពី SQLite database
+ ដែលអ្នកចាំបាច់ត្រូវ បន្ថែម doctrine/dbal dependency ទៅ composer.json file ហើយបន្ទាប់មក run composer update command 
+ នៅក្នុង terminal ដើម្បី install library :
 
-To drop a column, use the dropColumn method on the Schema builder. Before dropping columns from a SQLite database, you will need to add the doctrine/dbal dependency to your composer.json file and run the composer update command in your terminal to install the library:
+              Schema::table('users', function (Blueprint $table) {
+                  $table->dropColumn('votes');
+              });
+              
+       អ្នកអាច drop multiple columns ពី table ដោយ pass array នៃ  column names ទៅកាន់ dropColumn method:
+       
+ 
+                  Schema::table('users', function (Blueprint $table) {
+                      $table->dropColumn(['votes', 'avatar', 'location']);
+                  });
+        ការលុម ឬ កែប្រែ multiple columns នៅក្នុង single migration ដោយប្រើ SQLite database គឺមិន support ទេ ៕
 
-Schema::table('users', function (Blueprint $table) {
-    $table->dropColumn('votes');
-});
-You may drop multiple columns from a table by passing an array of column names to the  dropColumn method:
-
-Schema::table('users', function (Blueprint $table) {
-    $table->dropColumn(['votes', 'avatar', 'location']);
-});
-Dropping or modifying multiple columns within a single migration while using a SQLite database is not supported.
-
-Indexes
+                                                   Indexes
 
 
-Creating Indexes
+          Creating Indexes
+          
+        schema builder supports types នៃ indexes ជាច្រើន ។ 
 
 The schema builder supports several types of indexes. First, let's look at an example that specifies a column's values should be unique. To create the index, we can simply chain the unique method onto the column definition:
 
