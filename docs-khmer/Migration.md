@@ -166,70 +166,74 @@ command ខាងក្រោម នឹង  rollback និង បង្កើ�
             Schema::dropIfExists('users');
             
                                       Renaming Tables With Foreign Keys
-
-Before renaming a table, you should verify that any foreign key constraints on the table have an explicit name in your migration files instead of letting Laravel assign a convention based name. Otherwise, the foreign key constraint name will refer to the old table name.
-
-
-Columns
+        មុនពេល rename table អ្នកគួរតែ verify any foreign key constraints នៅលើ table ដោយ explicit name នៅក្នុង migration files 
+ជំនួស  letting Laravel assign a convention based name. Otherwise, the foreign key constraint name will refer to the old table name.
 
 
-Creating Columns
+                                        Columns
 
-The table method on the Schema facade may be used to update existing tables. Like the create method, the table method accepts two arguments: the name of the table and a Closure that receives a Blueprint instance you may use to add columns to the table:
 
-Schema::table('users', function (Blueprint $table) {
-    $table->string('email');
-});
-Available Column Types
+            Creating Columns
+        table method នៅលើ Schema facade ដែលត្រូវបានប្រើសំរាប់ update existing tables ។ ដូចនឹង create metho 
+table method accepts arguments ពីរ គឺ ឈ្មោះ table និង Closure ដែល receive Blueprint instance អ្នកអាចប្រើ
+ដើម្បី បន្ថែម columns ទៅកាន់ table :
 
-Of course, the schema builder contains a variety of column types that you may specify when building your tables:
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('email');
+            });
+          
+          
+            Available Column Types
+        
+        schema builder contains variety នៃ column types ដែលអ្នកអាច កំណត់ នៅពេល បង្កើត tables 
 
-Command	Description
-$table->bigIncrements('id');	Incrementing ID (primary key) using a "UNSIGNED BIG INTEGER" equivalent.
-$table->bigInteger('votes');	BIGINT equivalent for the database.
-$table->binary('data');	BLOB equivalent for the database.
-$table->boolean('confirmed');	BOOLEAN equivalent for the database.
-$table->char('name', 4);	CHAR equivalent with a length.
-$table->date('created_at');	DATE equivalent for the database.
-$table->dateTime('created_at');	DATETIME equivalent for the database.
-$table->dateTimeTz('created_at');	DATETIME (with timezone) equivalent for the database.
-$table->decimal('amount', 5, 2);	DECIMAL equivalent with a precision and scale.
-$table->double('column', 15, 8);	DOUBLE equivalent with precision, 15 digits in total and 8 after the decimal point.
-$table->enum('choices', ['foo', 'bar']);	ENUM equivalent for the database.
-$table->float('amount', 8, 2);	FLOAT equivalent for the database, 8 digits in total and 2 after the decimal point.
-$table->increments('id');	Incrementing ID (primary key) using a "UNSIGNED INTEGER" equivalent.
-$table->integer('votes');	INTEGER equivalent for the database.
-$table->ipAddress('visitor');	IP address equivalent for the database.
-$table->json('options');	JSON equivalent for the database.
-$table->jsonb('options');	JSONB equivalent for the database.
-$table->longText('description');	LONGTEXT equivalent for the database.
-$table->macAddress('device');	MAC address equivalent for the database.
-$table->mediumIncrements('id');	Incrementing ID (primary key) using a "UNSIGNED MEDIUM INTEGER" equivalent.
-$table->mediumInteger('numbers');	MEDIUMINT equivalent for the database.
-$table->mediumText('description');	MEDIUMTEXT equivalent for the database.
-$table->morphs('taggable');	Adds unsigned INTEGER taggable_id and STRING  taggable_type.
-$table->nullableMorphs('taggable');	Nullable versions of the morphs() columns.
-$table->nullableTimestamps();	Nullable versions of the timestamps() columns.
-$table->rememberToken();	Adds remember_token as VARCHAR(100) NULL.
-$table->smallIncrements('id');	Incrementing ID (primary key) using a "UNSIGNED SMALL INTEGER" equivalent.
-$table->smallInteger('votes');	SMALLINT equivalent for the database.
-$table->softDeletes();	Adds nullable deleted_at column for soft deletes.
-$table->string('email');	VARCHAR equivalent column.
-$table->string('name', 100);	VARCHAR equivalent with a length.
-$table->text('description');	TEXT equivalent for the database.
-$table->time('sunrise');	TIME equivalent for the database.
-$table->timeTz('sunrise');	TIME (with timezone) equivalent for the database.
-$table->tinyInteger('numbers');	TINYINT equivalent for the database.
-$table->timestamp('added_on');	TIMESTAMP equivalent for the database.
-$table->timestampTz('added_on');	TIMESTAMP (with timezone) equivalent for the database.
-$table->timestamps();	Adds nullable created_at and updated_at columns.
-$table->timestampsTz();	Adds nullable created_at and updated_at (with timezone) columns.
-$table->unsignedBigInteger('votes');	Unsigned BIGINT equivalent for the database.
-$table->unsignedInteger('votes');	Unsigned INT equivalent for the database.
-$table->unsignedMediumInteger('votes');	Unsigned MEDIUMINT equivalent for the database.
-$table->unsignedSmallInteger('votes');	Unsigned SMALLINT equivalent for the database.
-$table->unsignedTinyInteger('votes');	Unsigned TINYINT equivalent for the database.
-$table->uuid('id');	UUID equivalent for the database.
+          Command	Description
+          
+            $table->bigIncrements('id');	Incrementing ID (primary key) using a "UNSIGNED BIG INTEGER" equivalent.
+            $table->bigInteger('votes');	BIGINT equivalent for the database.
+            $table->binary('data');	BLOB equivalent for the database.
+            $table->boolean('confirmed');	BOOLEAN equivalent for the database.
+            $table->char('name', 4);	CHAR equivalent with a length.
+            $table->date('created_at');	DATE equivalent for the database.
+            $table->dateTime('created_at');	DATETIME equivalent for the database.
+            $table->dateTimeTz('created_at');	DATETIME (with timezone) equivalent for the database.
+            $table->decimal('amount', 5, 2);	DECIMAL equivalent with a precision and scale.
+            $table->double('column', 15, 8);	DOUBLE equivalent with precision, 15 digits in total and 8 after the decimal point.
+            $table->enum('choices', ['foo', 'bar']);	ENUM equivalent for the database.
+            $table->float('amount', 8, 2);	FLOAT equivalent for the database, 8 digits in total and 2 after the decimal point.
+            $table->increments('id');	Incrementing ID (primary key) using a "UNSIGNED INTEGER" equivalent.
+            $table->integer('votes');	INTEGER equivalent for the database.
+            $table->ipAddress('visitor');	IP address equivalent for the database.
+            $table->json('options');	JSON equivalent for the database.
+            $table->jsonb('options');	JSONB equivalent for the database.
+            $table->longText('description');	LONGTEXT equivalent for the database.
+            $table->macAddress('device');	MAC address equivalent for the database.
+            $table->mediumIncrements('id');	Incrementing ID (primary key) using a "UNSIGNED MEDIUM INTEGER" equivalent.
+            $table->mediumInteger('numbers');	MEDIUMINT equivalent for the database.
+            $table->mediumText('description');	MEDIUMTEXT equivalent for the database.
+            $table->morphs('taggable');	Adds unsigned INTEGER taggable_id and STRING  taggable_type.
+            $table->nullableMorphs('taggable');	Nullable versions of the morphs() columns.
+            $table->nullableTimestamps();	Nullable versions of the timestamps() columns.
+            $table->rememberToken();	Adds remember_token as VARCHAR(100) NULL.
+            $table->smallIncrements('id');	Incrementing ID (primary key) using a "UNSIGNED SMALL INTEGER" equivalent.
+            $table->smallInteger('votes');	SMALLINT equivalent for the database.
+            $table->softDeletes();	Adds nullable deleted_at column for soft deletes.
+            $table->string('email');	VARCHAR equivalent column.
+            $table->string('name', 100);	VARCHAR equivalent with a length.
+            $table->text('description');	TEXT equivalent for the database.
+            $table->time('sunrise');	TIME equivalent for the database.
+            $table->timeTz('sunrise');	TIME (with timezone) equivalent for the database.
+            $table->tinyInteger('numbers');	TINYINT equivalent for the database.
+            $table->timestamp('added_on');	TIMESTAMP equivalent for the database.
+            $table->timestampTz('added_on');	TIMESTAMP (with timezone) equivalent for the database.
+            $table->timestamps();	Adds nullable created_at and updated_at columns.
+            $table->timestampsTz();	Adds nullable created_at and updated_at (with timezone) columns.
+            $table->unsignedBigInteger('votes');	Unsigned BIGINT equivalent for the database.
+            $table->unsignedInteger('votes');	Unsigned INT equivalent for the database.
+            $table->unsignedMediumInteger('votes');	Unsigned MEDIUMINT equivalent for the database.
+            $table->unsignedSmallInteger('votes');	Unsigned SMALLINT equivalent for the database.
+            $table->unsignedTinyInteger('votes');	Unsigned TINYINT equivalent for the database.
+            $table->uuid('id');	UUID equivalent for the database.
 
 Column Modifiers
 
