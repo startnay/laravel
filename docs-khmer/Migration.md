@@ -20,56 +20,59 @@ application ។ ប្រសិនបើអ្នកមិនចង់ ប្រ
 
             php artisan make:migration add_votes_to_users_table --table=users
      
-If you would like to specify a custom output path for the generated migration, you may use the  --path option when executing the make:migration command. The given path should be relative to your application's base path.
+     ប្រសិនអ្នកចង់ កំណត់ path សំរាប់ បង្កើត migration ទៅទីតាំងនោះអ្នកត្រូវប្រើ --path option នៅពេល execute make:migration command។
+path គួរតែ relative to application's base path ។ 
 
 
-Migration Structure
+                                        Migration Structure
+        migration class ផ្ទុកmethod ពីរ គឺ up និង down ។ up method ត្រូវបានប្រើ ដើម្បី បង្កើត table  columns ឬ indexes ទៅកាន់ database របស់អ្នក
+នៅខណៈដែល down method ត្រូវបាន ផ្ទុយនឹង up method ខាងលើ . 
 
-A migration class contains two methods: up and down. The up method is used to add new tables, columns, or indexes to your database, while the down method should simply reverse the operations performed by the up method.
+នៅក្នុង methods ទាំងពីរខាងលើ អាចប្រើ Laravel schema builder ដើម្បីបង្កើត និង កែប្រែ tables ។ ដើម្បីរៀន អំពី methods ទាំងអស់ អាចរកបាន នៅលើ
+Schema builder  ដើម្បីឱ្យកាន់តែច្បាស់សូមមើល ឯកសាររបស់វា ។ នៅក្នុង ឩទាហរណ៍ ខាងក្រោម យើងបង្កើត flights table 
 
-Within both of these methods you may use the Laravel schema builder to expressively create and modify tables. To learn about all of the methods available on the Schema builder, check out its documentation. For example, this migration example creates a flights table:
+        <?php
 
-<?php
+        use Illuminate\Support\Facades\Schema;
+        use Illuminate\Database\Schema\Blueprint;
+        use Illuminate\Database\Migrations\Migration;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+        class CreateFlightsTable extends Migration
+        {
+            /**
+             * Run the migrations.
+             *
+             * @return void
+             */
+            public function up()
+            {
+                Schema::create('flights', function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->string('name');
+                    $table->string('airline');
+                    $table->timestamps();
+                });
+            }
 
-class CreateFlightsTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('flights', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('airline');
-            $table->timestamps();
-        });
-    }
+            /**
+             * Reverse the migrations.
+             *
+             * @return void
+             */
+            public function down()
+            {
+                Schema::drop('flights');
+            }
+        }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::drop('flights');
-    }
-}
+                                                      Running Migrations
 
-Running Migrations
-
-To run all of your outstanding migrations, execute the migrate Artisan command:
-
-php artisan migrate
-If you are using the Homestead virtual machine, you should run this command from within your virtual machine.
-Forcing Migrations To Run In Production
+          ដើម្បី run migrations ទាំងអស់ សូម execute migrate Artisan command :
+                  php artisan migrate
+                  
+         ប្រើសិនអ្នក កំពុងប្រើ homestead virtual machin អ្នកគួតែ run command ខាងក្រោម នៅក្នុង virtual machine។
+         
+        Forcing Migrations To Run In Production
 
 Some migration operations are destructive, which means they may cause you to lose data. In order to protect you from running these commands against your production database, you will be prompted for confirmation before the commands are executed. To force the commands to run without a prompt, use the --force flag:
 
