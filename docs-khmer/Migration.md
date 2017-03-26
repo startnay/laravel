@@ -88,13 +88,17 @@ run command ទាំងនេះទៅលើ production database អ្នក�
         php artisan migrate:rollback
 
 
-You may rollback a limited number of migrations by providing the step option to the rollback command. For example, the following command will rollback the last five migrations:
+        អ្នកអាច rollback ចំនួនកំណត់មួយរបស់ migrations ដោយ ប្រើ step option តាមរយៈ rollback command ។ ឩទាហរណ៍ command ខាងក្រោម នឹង 
+rollback five migration ចុងក្រោយ :
 
-php artisan migrate:rollback --step=5
-The migrate:reset command will roll back all of your application's migrations:
+          php artisan migrate:rollback --step=5
+          
+          
+         migrate:reset command នឹង rollback រាល់  application's migrations ទាំងអស់ : 
 
-php artisan migrate:reset
-Rollback & Migrate In Single Command
+            php artisan migrate:reset
+                                
+                                          Rollback & Migrate In Single Command
 
 The migrate:refresh command will roll back all of your migrations and then execute the migrate command. This command effectively re-creates your entire database:
 
