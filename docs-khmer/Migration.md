@@ -141,30 +141,31 @@ command ខាងក្រោម នឹង  rollback និង បង្កើ�
           ប្រសិនបើអ្នកចង់ perform schema operation នៅលើ database connection ដែលមិនមែនជា default connection
  អ្នកត្រូវប្រើ method connection ដូចខាងក្រោមៈ
 
-        Schema::connection('foo')->create('users', function (Blueprint $table) {
-            $table->increments('id');
-        });
+            Schema::connection('foo')->create('users', function (Blueprint $table) {
+                $table->increments('id');
+            });
         
         
-You may use the engine property on the schema builder to define the table's storage engine:
+        អ្នកអាចប្រើ engine property នៅលើ schema bulder ដើម្បី define table's storage engine:
+        
+            Schema::create('users', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
 
-Schema::create('users', function (Blueprint $table) {
-    $table->engine = 'InnoDB';
+                $table->increments('id');
+            });
+            
 
-    $table->increments('id');
-});
+                    Renaming / Dropping Tables
 
-Renaming / Dropping Tables
-
-To rename an existing database table, use the rename method:
-
-Schema::rename($from, $to);
-To drop an existing table, you may use the drop or dropIfExists methods:
-
-Schema::drop('users');
-
-Schema::dropIfExists('users');
-Renaming Tables With Foreign Keys
+        ដើម្បី rename existing database table យើងប្រើ rename method ដូចខាងក្រោម :
+        
+            Schema::rename($from, $to);
+        ដើម្បីលុប table នៅក្នុង database អ្នកអាចប្រើ drop ឬ dropIfExists methods:
+       
+            Schema::drop('users');
+            Schema::dropIfExists('users');
+            
+                                      Renaming Tables With Foreign Keys
 
 Before renaming a table, you should verify that any foreign key constraints on the table have an explicit name in your migration files instead of letting Laravel assign a convention based name. Otherwise, the foreign key constraint name will refer to the old table name.
 
