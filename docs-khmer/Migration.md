@@ -235,53 +235,65 @@ table method accepts arguments ពីរ គឺ ឈ្មោះ table និង 
             $table->unsignedTinyInteger('votes');	Unsigned TINYINT equivalent for the database.
             $table->uuid('id');	UUID equivalent for the database.
 
-Column Modifiers
+            Column Modifiers
+        បន្ថែមលើ column types list ខាងលើ មាន column modifier ជាច្រើន ដែលអ្នកឱ្យអ្នកប្រើ ដើម្បី បន្ថែម column មួយទៅ database table ។
+ អ្នកអាច បង្កើត column nullable ដោយប្រើ nullable method :
 
-In addition to the column types listed above, there are several column "modifiers" you may use while adding a column to a database table. For example, to make the column "nullable", you may use the nullable method:
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('email')->nullable();
+        });
+        
+        list នៃ column modifiers ខាងក្រោម ទាំងអស់ ។ List នេះមិន មាន index modifiers ទេ:
 
-Schema::table('users', function (Blueprint $table) {
-    $table->string('email')->nullable();
-});
-Below is a list of all the available column modifiers. This list does not include the index modifiers:
+        Modifier	Description
+            ->after('column')	Place the column "after" another column (MySQL Only)
+            ->comment('my comment')	Add a comment to a column
+            ->default($value)	Specify a "default" value for the column
+            ->first()	Place the column "first" in the table (MySQL Only)
+            ->nullable()	Allow NULL values to be inserted into the column
+            ->storedAs($expression)	Create a stored generated column (MySQL Only)
+            ->unsigned()	Set integer columns to UNSIGNED
+            ->virtualAs($expression)	Create a virtual generated column (MySQL Only)
 
-Modifier	Description
-->after('column')	Place the column "after" another column (MySQL Only)
-->comment('my comment')	Add a comment to a column
-->default($value)	Specify a "default" value for the column
-->first()	Place the column "first" in the table (MySQL Only)
-->nullable()	Allow NULL values to be inserted into the column
-->storedAs($expression)	Create a stored generated column (MySQL Only)
-->unsigned()	Set integer columns to UNSIGNED
-->virtualAs($expression)	Create a virtual generated column (MySQL Only)
+        Modifying Columns
 
-Modifying Columns
+        Prerequisites
+      
+      មុនពេល modify column ចូរប្រាកដវា អ្នកបានបន្ថែម doctrine/dbal dependency ទៅកាន់ composer.json file ។
+Doctrine DBAL library ត្រូវបានប្រើដើម្បីកំណត់ current state នៃ column និង បង្កើត SQL queies ដែលចាំបាច់ ដើម្បី កែប្រែ column ជាក់លាក់ណាមួយ
 
-Prerequisites
+          composer require doctrine/dbal
+        
+        Updating Column Attributes
+        
+        change method អនុញ្ញាត ឱ្យអ្នក modify column types ដែលមានស្រាប់ ទៅជាប្រភេទថ្មី ឫក៏ modify column's attributes។
+អ្នកអាចបង្កើន size នៃ string colum។ ដើម្បី មើល change method action សូមមើល increase size នៃ column name ពី ២៥ ទៅ ៥០ ដូចខាងក្រោម
 
-Before modifying a column, be sure to add the doctrine/dbal dependency to your composer.json file. The Doctrine DBAL library is used to determine the current state of the column and create the SQL queries needed to make the specified adjustments to the column:
 
-composer require doctrine/dbal
-Updating Column Attributes
+          Schema::table('users', function (Blueprint $table) {
+              $table->string('name', 50)->change();
+          });
+                        
+                        We could also modify a column to be nullable:
 
-The change method allows you to modify some existing column types to a new type or modify the column's attributes. For example, you may wish to increase the size of a string column. To see the  change method in action, let's increase the size of the name column from 25 to 50:
+          Schema::table('users', function (Blueprint $table) {
+              $table->string('name', 50)->nullable()->change();
+          });
+          
+          column types ខាងក្រោម មិនអាច changed char double enum mediumInteger timestamp tinyInteger ipAddress json jsonb
+ macAddress mediumIncrements morphs nullableMorphs nullableTimestamps softDeletes timeTz timestampTz timestamps timestampsTz
+ unsigneMediumInteger unsignedTinyInteger uuid ។
 
-Schema::table('users', function (Blueprint $table) {
-    $table->string('name', 50)->change();
-});
-We could also modify a column to be nullable:
 
-Schema::table('users', function (Blueprint $table) {
-    $table->string('name', 50)->nullable()->change();
-});
-The following column types can not be "changed": char, double, enum, mediumInteger, timestamp, tinyInteger, ipAddress, json, jsonb, macAddress, mediumIncrements, morphs, nullableMorphs, nullableTimestamps, softDeletes, timeTz, timestampTz, timestamps, timestampsTz, unsignedMediumInteger, unsignedTinyInteger, uuid.
+                                            Renaming Columns
+                                            
+          ដើម្បី rename column អ្នកអាចប្រើ renameColumn method នៅលើ Schema builder ។ មុនពេល rename column 
+ សូមប្រាកដថា អ្នកបាន add doctrine/dbal dependency ទៅកាន់ coposer.json file:
 
-Renaming Columns
 
-To rename a column, you may use the renameColumn method on the Schema builder. Before renaming a column, be sure to add the doctrine/dbal dependency to your composer.json file:
-
-Schema::table('users', function (Blueprint $table) {
-    $table->renameColumn('from', 'to');
-});
+              Schema::table('users', function (Blueprint $table) {
+                  $table->renameColumn('from', 'to');
+              });
 Renaming any column in a table that also has a column of type enum is not currently supported.
 
 Dropping Columns
