@@ -99,47 +99,53 @@ rollback five migration ចុងក្រោយ :
             php artisan migrate:reset
                                 
                                           Rollback & Migrate In Single Command
+        migrate:refresh command roll back migrations ទាំងអស់ ហើយបន្ទាប់មក execute migrate command ។
+command នេះត្រូវប្រើ ដើម្បីបង្កើត database ឡើងវិញទាំងមួល :
+      
+      php artisan migrate:refresh
+      // Refresh the database and run all database seeds...     
+      php artisan migrate:refresh --seed
+      
+      អ្នកអាច rollback និង re-migrate ចនួនកំណត់ នៃ migrations ដោយ step option តាមរយៈ refresh command 
+command ខាងក្រោម នឹង  rollback និង បង្កើត migration ប្រាំចុងក្រោយ ឡើងវិញ :
 
-The migrate:refresh command will roll back all of your migrations and then execute the migrate command. This command effectively re-creates your entire database:
+      php artisan migrate:refresh --step=5
 
-php artisan migrate:refresh
-
-// Refresh the database and run all database seeds...
-php artisan migrate:refresh --seed
-You may rollback & re-migrate a limited number of migrations by providing the step option to the  refresh command. For example, the following command will rollback & re-migrate the last five migrations:
-
-php artisan migrate:refresh --step=5
-
-Tables
+                                                  Tables
 
 
-Creating Tables
+        Creating Tables
+        ដើម្បីបង្កើត database table ថ្មីមួយ យើងប្រើ create method នៅលើ Schema facade ។ create method 
+ ចាប់យក arguments ពីរ ដែល argument ទីមួយគឺជា ឈ្មោះ table ហើយ second គឺជា Closure ដែល ទទួល យក Blueprint object 
+ ដែលអាចត្រូវប្រើដើម្បី define table ថ្មីមួយ :
 
-To create a new database table, use the create method on the Schema facade. The create method accepts two arguments. The first is the name of the table, while the second is a Closure which receives a Blueprint object that may be used to define the new table:
 
-Schema::create('users', function (Blueprint $table) {
-    $table->increments('id');
-});
-Of course, when creating the table, you may use any of the schema builder's column methods to define the table's columns.
+        Schema::create('users', function (Blueprint $table) {
+            $table->increments('id');
+        });
+        
+        នៅពេល បង្កើត table អ្នកអាចប្រើ schema builder's column method ណាមួយ ដើម្បី define table's columns ។
 
-Checking For Table / Column Existence
+                                Checking For Table / Column Existence
+        ដើម្បីងាយស្រួលក្នុងការ ពិនិត្យ មើលថា table ឬក៏ column មាន ឬអត់ យើងប្រើ hasTable ឬ hasColumn methods :
+     
+            if (Schema::hasTable('users')) {
+                //
+            }
 
-You may easily check for the existence of a table or column using the hasTable and hasColumn methods:
+            if (Schema::hasColumn('users', 'email')) {
+                //
+            }
+                                              
+                                              Connection & Storage Engine
+          ប្រសិនបើអ្នកចង់ perform schema operation នៅលើ database connection ដែលមិនមែនជា default connection
+ អ្នកត្រូវប្រើ method connection ដូចខាងក្រោមៈ
 
-if (Schema::hasTable('users')) {
-    //
-}
-
-if (Schema::hasColumn('users', 'email')) {
-    //
-}
-Connection & Storage Engine
-
-If you want to perform a schema operation on a database connection that is not your default connection, use the connection method:
-
-Schema::connection('foo')->create('users', function (Blueprint $table) {
-    $table->increments('id');
-});
+        Schema::connection('foo')->create('users', function (Blueprint $table) {
+            $table->increments('id');
+        });
+        
+        
 You may use the engine property on the schema builder to define the table's storage engine:
 
 Schema::create('users', function (Blueprint $table) {
